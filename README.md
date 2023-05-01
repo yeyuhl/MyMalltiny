@@ -59,7 +59,7 @@ src
 
 ## generator
 
-根据数据库的数据和自己编写的模板，使用mybatis-plus-generator来一键生成对应数据的entity和mapper。使用MyBatisPlusGenerator类后输入要放入的包名以及要生成的表的名字，即:
+根据数据库的数据和自己编写的模板，使用mybatis-plus-generator来一键生成对应数据的entity和mapper。后期根据自己的业务需求，对相应的mapper定义方法，并在xml中对其实现。使用MyBatisPlusGenerator类后输入要放入的包名以及要生成的表的名字，即:
 
 ums_admin,ums_admin_login_log,ums_admin_role_relation,ums_menu,ums_resource,ums_resource_category,ums_role,ums_role_menu_relation,ums_role_resource_relation
 
