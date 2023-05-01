@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.yeyuhl.malltiny.modules.ums.mapper.UmsMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.github.yeyuhl.malltiny.modules.ums.model.UmsMenu">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="title" property="title"/>
+        <result column="level" property="level"/>
+        <result column="sort" property="sort"/>
+        <result column="name" property="name"/>
+        <result column="icon" property="icon"/>
+        <result column="hidden" property="hidden"/>
+    </resultMap>
+
+    <select id="getMenuList" resultType="java.lang.Long">
+        select m.id          id,
+               m.parent_id   parentId,
+               m.create_time createTime,
+               m.title       title,
+               m.level       level,
+               m.sort        sort,
+               m.name        name,
+               m.icon        icon,
+               m.hidden      hidden
+        from ums_admin_role_relation arr
+                 left join ums_role r on r.id = arr.role_id
+                 left join ums_role_menu_relation rmr on rmr.role_id = arr.id
+                 left join ums_menu m on m.id = rmr.menu_id
+        where arr.admin_id = #{adminId}
+          and m.id is not null
+        group by m.id
+    </select>
+
+    <select id="getMenuListByRoleId" resultType="java.lang.Long">
+        select m.id          id,
+               m.parent_id   parentId,
+               m.create_time createTime,
+               m.title       title,
+               m.level       level,
+               m.sort        sort,
+               m.name        name,
+               m.icon        icon,
+               m.hidden      hidden
+        from ums_role_menu_relation rmr
+                 left join ums_menu m on m.id = rmr.menu_id
+        where rmr.role_id = #{roleId}
+          and m.id is not null
+        group by m.id
+    </select>
+
+</mapper>

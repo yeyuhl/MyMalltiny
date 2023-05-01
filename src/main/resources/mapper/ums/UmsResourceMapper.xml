@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.yeyuhl.malltiny.modules.ums.mapper.UmsResourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.github.yeyuhl.malltiny.modules.ums.model.UmsResource">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <result column="description" property="description"/>
+        <result column="category_id" property="categoryId"/>
+    </resultMap>
+
+    <select id="getResourceList" resultType="io.github.yeyuhl.malltiny.modules.ums.model.UmsResource">
+        select ur.id          id,
+               ur.create_time createTime,
+               ur.name        name,
+               ur.url         url,
+               ur.description description,
+               ur.category_id categoryId
+        from ums_admin_role_relation arr
+                 left join ums_role r on r.id = arr.role_id
+                 left join ums_role_resource_relation rrr on rrr.role_id = r.id
+                 left join ums_resource ur on ur.id = rrr.resource_id
+        where arr.admin_id = #{adminId}
+          and ur.id is not null
+        group by ur.id
+    </select>
+
+</mapper>
